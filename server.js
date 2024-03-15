@@ -1,19 +1,20 @@
+// server.js
 const express = require('express');
-const routes = require('./routes');
-const db = require('./config/connection'); 
-require('dotenv').config();
+const mongoose = require('mongoose');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use(routes);
-
-
-db.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}!`);
-  });
+mongoose.connect('mongodb://localhost/socialmedia', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
+
+// Define models
+const User = require('./models/User');
+const Thought = require('./models/Thought');
+
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
