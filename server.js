@@ -12,7 +12,6 @@ mongoose.connect('mongodb://localhost/socialmedia', {
   useUnifiedTopology: true,
 });
 
-// Define models
 const User = require('./models/User');
 const Thought = require('./models/Thought');
 
