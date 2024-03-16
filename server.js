@@ -18,5 +18,6 @@ const Thought = require('./models/Thought');
 
  app.use('/api/users', require('./routes/userRoutes'));
 
+ app.use('/api/thoughts', require('./routes/thoughtRoutes'));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

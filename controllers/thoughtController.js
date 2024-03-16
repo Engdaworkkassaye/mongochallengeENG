@@ -1,4 +1,5 @@
 const Thought = require('../models/Thought');
+const Reaction = require('../models/Reaction'); 
 
 exports.getAllThoughts = async (req, res) => {
   try {
