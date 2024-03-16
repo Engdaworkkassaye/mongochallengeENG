@@ -1,5 +1,6 @@
 const Thought = require('../models/Thought');
 const Reaction = require('../models/Reaction'); 
+const User = require('../models/User')
 
 exports.getAllThoughts = async (req, res) => {
   try {
@@ -10,15 +11,26 @@ exports.getAllThoughts = async (req, res) => {
   }
 };
 
-exports.createThought = async (req, res) => {
-  try {
-    const newThought = await Thought.create(req.body);
-    res.status(201).json(newThought);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
 
+exports.createThought = async (req, res) => {
+    try {
+      const { username, thoughtText } = req.body;
+  
+      const thought = await Thought.create({ username, thoughtText });
+  
+      const user = await User.findOneAndUpdate(
+        { username },
+        { $push: { thoughts: thought._id } },
+        { new: true }
+      );
+  
+      res.json(thought);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
 
 exports.getThoughtById = async (req, res) => {
     try {
